@@ -460,5 +460,8 @@ Grafik %>% layout(title = "Zusammenhang Durchschnittstemperatur (in °C),
 \begin{figure}[H]
     \centering
     \includegraphics[width = \textwidth]{Grafik4.6.1.png}
-\end{figure} 
+\end{figure}
+\section{GitHub Link}
+Hier ist einmal der zugehörige GitHub Link zu unserem Latex Dokument: \newline 
+https://github.com/MHausmann12/CoMetAbgabe2.git
 \end{document}
