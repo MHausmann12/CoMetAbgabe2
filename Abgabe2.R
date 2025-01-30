@@ -5,7 +5,7 @@ library("plotly")
 #3.1
 #Anzahl Personen die Wichteln
 n <- 8
-#Anzahl an Iterationen für die Simualation
+#Anzahl an Iterationen für die Simulation
 m <- 100000                
 #Vektor der Personen wird erstellt
 x <- 1:n                  
@@ -15,7 +15,7 @@ zähler <- 0
 for (i in 1:m) {
   #Vektor x wird zufällig sortiert (jeder bekommt ein zufälliges Geschenk)
   y <- sample(x)           
-  #Gucken ob jemand sein Geschenk bekommt 
+  #Gucken, ob jemand sein Geschenk bekommt 
   #(wenn ein Eintrag = 0 dann hat er seins wiederbekommen, sonst nicht)
   z <- x-y                 
   #Wenn mind. ein Eintrag von z Null ist, dann geht man in die If-Schleife
@@ -32,7 +32,7 @@ for (i in 1:m) {
 #3.2
 #Funktionsaufruf definiert
 wichtel_unglueck <- function(n, k, iterationen = 1e6){   
-  #Fehlerausgabe wenn mind. eine Variable kein numerischer Wert ist
+  #Fehlerausgabe, wenn mind. eine Variable kein numerischer Wert ist
   if(!is.numeric(n) || !is.numeric(k) || !is.numeric(iterationen)){    
     stop("Falsche Werte für Funktionsaufruf")                          
   }
@@ -40,11 +40,11 @@ wichtel_unglueck <- function(n, k, iterationen = 1e6){
   x <- 1:n                      
   #zähler wie oben definiert
   zähler <- 0                   
-  #for schleife wie oben definiert mit iterationen als Anzahl der Itertionen
+  #for schleife wie oben definiert mit iterationen als Anzahl der Iterationen
   for (i in 1:iterationen) {    
     #Vektor wie Permutiert
     y <- sample(x)              
-    #geguckt ob man sein Geschenkt wiederbekommen hat
+    #geguckt, ob man sein Geschenkt wiederbekommen hat
     z <- x-y                    
     #wird gezählt wie viele ihr Geschenk wiederbekommen haben,
     #wenn der Wert größer als das zugelassene k ist, wird der zähler um 1 erhöht
@@ -59,14 +59,14 @@ wichtel_unglueck <- function(n, k, iterationen = 1e6){
 
 #3.4
 #Test, ob wenn man 5 Personen hat, dann höchstens 5 ihr Geschenk bekommen
-#Kann nicht Auftreten, daher muss 1 rauskommen
+#Kann nicht auftreten, daher muss 1 herauskommen
 #Passt, daher kein Feedback beim Ausführen
 expect_equal(                   
   wichtel_unglueck(5,5),         
   1                             
 )
 #Test, ob wenn einer der Variablen kein numerischer Wert ist,
-#dass dann der richtige Fehlernachricht kommt
+#dass dann die richtige Fehlernachricht kommt
 expect_error(                          
   wichtel_unglueck(3,1,"das"),         
   "Falsche Werte für Funktionsaufruf"
@@ -86,10 +86,10 @@ expect_no_error(
 setwd('D:/Universität/Computergestützte Methoden')            
 #Importieren der Datei
 daten <- read.csv(file='bike_sharing_data_(with_NAs).csv', header=TRUE, sep=',')
-#gucken ob es als data.frame abgespeichert wurde, Antwort: Ja
+#gucken, ob es als data.frame abgespeichert wurde, Antwort: Ja
 str(daten)                          
 #3.5.1
-#gucken ob in der group spalte ein NA ist
+#gucken, ob in der "group" Spalte ein NA ist
 anyNA(daten$group)             
 #da nicht, filtern wo unsere Gruppe ist (Gruppe 11)
 i <- which(daten$group == 11)         
@@ -100,17 +100,17 @@ data <- daten[i,]
 nrow(data)                           
 #gucken wie viele Na's wir haben: Antwort: 12
 sum(is.na(data))                     
-#gucken in welchen spalten und welche Einträge NA's sind
+#gucken in welchen Spalten und welche Einträge NA's sind
 for (i in 1:length(data[1,])) {      
   print(which(is.na(data[,i])))
 }
 #Na's in Spalte 4 entfernen
-#Aufgefallen: es ist der Tag im Jahr, also normalerweise aufsteigene Zahlen
-#Da wir nicht 365 Einträge haben, fehlen welche, also falls so ein Fall Eintritt,
+#Aufgefallen: Es ist der Tag im Jahr, also normalerweise aufsteigende Zahlen
+#Da wir nicht 365 Einträge haben, fehlen welche, also falls so ein Fall eintritt,
 for (i in which(is.na(data[,4]))) {             
   if(data[i+1,4]-data[i-1,4] != 2){             
-    #wo der Vor- und Nachtag vom NA Eintrag nicht sich um 2 unterschieden,
-    #kommt Fehlermeldung, dass man selber nachschauen muss was der richtige Wert ist.
+    #wo der Vortag und der Tag danach vom NA Eintrag nicht sich um 2 unterschieden,
+    #kommt Fehlermeldung, dass man selber nachschauen muss, was der richtige Wert ist.
     print("Muss man sich selber angucken")      
     next                                        
   }                                             
@@ -119,7 +119,7 @@ for (i in which(is.na(data[,4]))) {
 } 
 #Na's in Spalte 5 entfernen (Wochentage)
 for (i in which(is.na(data[,5]))) {             
-  #Wenn Wochentag 2-6 fehlt, dann einfach den Vorherigen Wochentag um einen erhöhen
+  #Wenn Wochentag 2-6 fehlt, dann einfach den vorherigen Wochentag um einen erhöhen
   if(data[i+1,5]-data[i-1,5] == 2){             
     data[i,5] <- data[i-1,5] + 1
   }
@@ -138,29 +138,29 @@ for (i in which(is.na(data[,5]))) {
 }
 #NA's in Spalte 6 entfernen (Monat des Jahres)
 for (i in which(is.na(data[,6]))) {            
-  #Wenn der Vor- und Nachtag im selben Monat sind,
+  #Wenn der Vortag und der Tag danach im selben Monat sind,
   #Dann den Monat für das NA übernehmen
   if (data[i-1,6] == data[i+1,6]) {            
     data[i,6] <- data[i-1,6]                   
   }
-  #Ansonsten muss man sich es angucken (Ende des Monate, Anfang des Monats)
+  #Ansonsten muss man sich es angucken (Ende des Monats, Anfang des Monats)
   else {                                       
     print("Muss man sich selber anschauen")
   }
 }
 #NA Spalte 7 entfernen,
 mean_precipitation <- round(mean(data$precipitation, na.rm = TRUE), digits = 2)
-#Mittelwert der Spalte verwenden, da relativ zufällig unabhänig vom Zeitpunkt des Tages
+#Mittelwert der Spalte verwenden, da relativ zufällig unabhängig vom Zeitpunkt des Tages
 data[which(is.na(data[,7])),7] <- mean_precipitation                   
 #NA Spalte 8 entfernen
 mean_windspeed <- round(mean(data$windspeed, na.rm = TRUE), digits = 2)
-#Mittelwert der Spalte verweden, da relativ zufällig unabhänig vom Zeitpunkt des Tages
+#Mittelwert der Spalte verwenden, da relativ zufällig unabhängig vom Zeitpunkt des Tages
 data[which(is.na(data[,8])),8] <- mean_windspeed                      
 #NA Spalte 9,10,11,12 zusammen entfernen, da Schema der Imputationsverfahren gleich ist
 for (j in 9:12) {                                                       
   for (i in which(is.na(data[,j]))) {                                         
     #Wert durch Mittelwert von 5 Tagen davor bis 5 Tage danach ersetzten
-    #(Temperatur und ausgeliehende Fahrräder sind Jahreszeitabhängig)
+    #(Temperatur und ausgeliehene Fahrräder sind Jahreszeitabhängig)
     data[i,j] <- round(mean(data[(i-5):(i+5),j], na.rm = TRUE), digits = 0)    
   }
 }
@@ -182,11 +182,11 @@ for (i in which(data$windspeed <0)) {
   #durch Mittelwert ersetzen
   data[i,8] <- mean_windspeed                                           
 }
-#Spalten 9 bis 12 unnormale Werte (<0), Temperatur <0 sehr unwahrschenlich,
+#Spalten 9 bis 12 unnormale Werte (<0), Temperatur <0 sehr unwahrscheinlich,
 #Ausgeliehende Fahrräder <0 auch
 for (j in 9:12) {                                                 
   for (i in which(data[,j] < 0)) {
-    #Imputierten durch Mittelwert von 5 Tagen davor bis 5 Tage dannach
+    #Imputierten durch Mittelwert von 5 Tagen davor bis 5 Tage danach
     data[i,j] <- round(mean(data[(i-5):(i+5),j]), digits = 0)     
   }
 }
@@ -200,11 +200,11 @@ for (i in 9:11) {
 #Vektor für die 12 Monate erstellen
 x <- 1:12                                                   
 #Für jeden Monat
-#count aufsummieren und in x Speichern
+#count aufsummieren und in x speichern
 for (i in 1:12) {                                            
   x[i] <-  sum(data$count[data$month_of_year == i])         
 }
-#Monat mit der höchsten Gesamtanzahl ausgeliehender Fahrräder
+#Monat mit der höchsten Gesamtanzahl ausgeliehener Fahrräder
 which(x == max(x))                                       
 #zugehöriger Wert
 max(x)                                                    
